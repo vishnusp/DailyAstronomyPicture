@@ -23,7 +23,7 @@ class DataRepository(private val preferences: SharedPreferences) {
         private const val KEY_ASTRO_PIC_INFO = "astro_pic_info"
         private const val KEY_ASTRO_PIC_BITMAP_CACHE = "astro_pic_cache"
         private const val URL =
-            "https://api.nasa.gov/planetary/apod?api_key=5L2PUF5sc50uLetIYgXGa9ZrfxHRADxWUYuBnoWd&&date=2021-08-22"
+            "https://api.nasa.gov/planetary/apod?api_key=5L2PUF5sc50uLetIYgXGa9ZrfxHRADxWUYuBnoWd"
     }
 
     private val lru: LruCache<String, Bitmap> = LruCache(1024)
