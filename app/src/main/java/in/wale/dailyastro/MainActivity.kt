@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.ProgressBar
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
@@ -29,7 +30,7 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
         descriptionTextView = findViewById(R.id.descriptionTextView)
         progressBar = findViewById(R.id.progress)
         contentGroup = findViewById(R.id.contentGroup)
-        presenter.fetchDailyAstroPicInfo()
+        presenter.fetchDailyAstroPicInfo(this)
     }
 
     private fun getSharedPreferences() =
@@ -43,9 +44,17 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     override fun showContentViews(dailyAstroPicInfo: AstroPicInfo?) {
         progressBar.visibility = GONE
         contentGroup.visibility = VISIBLE
-        astroImage.setImageResource(R.drawable.ic_launcher_background)
+        astroImage.setImageBitmap(dailyAstroPicInfo?.bitmap)
         titleTextView.text = dailyAstroPicInfo?.title
         descriptionTextView.text = dailyAstroPicInfo?.description
+    }
+
+    override fun showOldDataAlert() {
+        AlertDialog.Builder(this)
+            .setCancelable(false)
+            .setMessage(R.string.alert_msg_old_data_shown)
+            .setPositiveButton(R.string.ok, null)
+            .show()
     }
 
 }

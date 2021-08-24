@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Daily Astronomy Picture</string>
+    <string name="ok">OK</string>
+    <string name="alert_msg_old_data_shown">We are not connected to the internet, showing you the last image we have.</string>
 </resources>
