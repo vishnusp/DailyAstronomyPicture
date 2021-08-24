@@ -1,5 +1,6 @@
 package `in`.wale.dailyastro
 
+import `in`.wale.dailyastro.repository.AstroPicInfo
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
@@ -22,26 +23,29 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        presenter = MainActivityPresenter(this)
+        presenter = MainActivityPresenter(this, getSharedPreferences())
         astroImage = findViewById(R.id.astroImage)
         titleTextView = findViewById(R.id.titleTextView)
         descriptionTextView = findViewById(R.id.descriptionTextView)
         progressBar = findViewById(R.id.progress)
         contentGroup = findViewById(R.id.contentGroup)
-        //TODO replace with actual data from API
-        astroImage.setImageResource(R.drawable.ic_launcher_background)
-        titleTextView.text = "Hello World!!"
-        descriptionTextView.text = "Hello World.. description here"
+        presenter.fetchDailyAstroPicInfo()
     }
+
+    private fun getSharedPreferences() =
+        getSharedPreferences("DailyAstroPic", MODE_PRIVATE)
 
     override fun showProgress() {
         progressBar.visibility = VISIBLE
         contentGroup.visibility = GONE
     }
 
-    override fun showContentViews() {
+    override fun showContentViews(dailyAstroPicInfo: AstroPicInfo?) {
         progressBar.visibility = GONE
         contentGroup.visibility = VISIBLE
+        astroImage.setImageResource(R.drawable.ic_launcher_background)
+        titleTextView.text = dailyAstroPicInfo?.title
+        descriptionTextView.text = dailyAstroPicInfo?.description
     }
 
 }
