@@ -1,6 +1,5 @@
 package `in`.wale.dailyastro
 
-import `in`.wale.dailyastro.repository.AstroPicInfo
 import `in`.wale.dailyastro.repository.DataRepository
 import android.content.Context
 import android.content.SharedPreferences

@@ -1,4 +1,4 @@
-package `in`.wale.dailyastro.repository
+package `in`.wale.dailyastro
 
 import android.graphics.Bitmap
 

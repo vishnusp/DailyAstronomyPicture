@@ -1,6 +1,5 @@
 package `in`.wale.dailyastro
 
-import `in`.wale.dailyastro.repository.AstroPicInfo
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE

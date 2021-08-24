@@ -1,5 +1,6 @@
 package `in`.wale.dailyastro.repository
 
+import `in`.wale.dailyastro.AstroPicInfo
 import android.content.SharedPreferences
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -22,16 +23,17 @@ class DataRepository(private val preferences: SharedPreferences) {
         private const val KEY_ASTRO_PIC_INFO = "astro_pic_info"
         private const val KEY_ASTRO_PIC_BITMAP_CACHE = "astro_pic_cache"
         private const val URL =
-            "https://api.nasa.gov/planetary/apod?api_key=5L2PUF5sc50uLetIYgXGa9ZrfxHRADxWUYuBnoWd"
+            "https://api.nasa.gov/planetary/apod?api_key=5L2PUF5sc50uLetIYgXGa9ZrfxHRADxWUYuBnoWd&&date=2021-08-22"
     }
 
     private val lru: LruCache<String, Bitmap> = LruCache(1024)
 
-
+    /**
+     * To get the AstroPicInfo for today by hitting the NASA API.
+     */
     suspend fun getDailyAstroPicInfo(): AstroPicInfo? {
         return withContext(Dispatchers.IO) {
             val urlConnection: URLConnection?
-
             try {
                 urlConnection = URL(URL).openConnection()
             } catch (e: MalformedURLException) {
@@ -84,6 +86,7 @@ class DataRepository(private val preferences: SharedPreferences) {
                 val url = URL(src)
                 val connection: HttpURLConnection = url.openConnection() as HttpURLConnection
                 connection.doInput = true
+                connection.useCaches = true
                 connection.connect()
                 val myBitmap = BitmapFactory.decodeStream(connection.inputStream)
                 lru.put(KEY_ASTRO_PIC_BITMAP_CACHE, myBitmap)
@@ -95,6 +98,9 @@ class DataRepository(private val preferences: SharedPreferences) {
         }
     }
 
+    /**
+     * To get the AstroPicInfo from cache.
+     */
     fun getDailyAstroPicInfoCache(): AstroPicInfo? {
         try {
             val jsonObject =
