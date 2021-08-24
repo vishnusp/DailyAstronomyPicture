@@ -54,6 +54,10 @@ class MainActivityPresenter(private val view: View, preferences: SharedPreferenc
 
     }
 
+    fun onDestroy() {
+        job.cancel()
+    }
+
     interface View {
         fun showProgress()
 

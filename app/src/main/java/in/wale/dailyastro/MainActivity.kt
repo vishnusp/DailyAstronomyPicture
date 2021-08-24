@@ -32,6 +32,11 @@ class MainActivity : AppCompatActivity(), MainActivityPresenter.View {
         presenter.fetchDailyAstroPicInfo(this)
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        presenter.onDestroy()
+    }
+
     private fun getSharedPreferences() =
         getSharedPreferences("DailyAstroPic", MODE_PRIVATE)
 
